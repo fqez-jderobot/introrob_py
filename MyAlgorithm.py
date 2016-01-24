@@ -1,20 +1,31 @@
 from sensors import sensor
+import math
+import jderobot
+from Beacon import Beacon
 
-AREA = [[7.0, -4.0], [7.0, 3.0], [-1.0, 7.0], [-7.0, 0.5], [-0.5, -7.0]]
-CASCPATH = "haarcascade_frontalface_default.xml"
 
 class MyAlgorithm():
-  def __init__(self, sensor):
-    self.sensor = sensor
+    def __init__(self, sensor):
+        self.sensor = sensor
+        self.beacons=[]
+        self.initBeacons()
+        self.minError=0.01
 
-  def execute(self):
-    #Add your code here
-    tmp = self.sensor.getNavdata()
-    if tmp is not None:
-        print "State: " +str(tmp.state)
-        print "Altitude: " +str(tmp.altd)
-        print "Vehicle: " +str(tmp.vehicle)
-        print "Battery %: " +str(tmp.batteryPercent)
+    def initBeacons(self):
+        self.beacons.append(Beacon('baliza1',jderobot.Pose3DData(0,5,0,0,0,0,0,0),False,False))
+        self.beacons.append(Beacon('baliza2',jderobot.Pose3DData(5,0,0,0,0,0,0,0),False,False))
+        self.beacons.append(Beacon('baliza3',jderobot.Pose3DData(0,-5,0,0,0,0,0,0),False,False))
+        self.beacons.append(Beacon('baliza4',jderobot.Pose3DData(-5,0,0,0,0,0,0,0),False,False))
+        self.beacons.append(Beacon('baliza5',jderobot.Pose3DData(10,0,0,0,0,0,0,0),False,False))
+        self.beacons.append(Beacon('inicio',jderobot.Pose3DData(0,0,0,0,0,0,0,0),False,False))
 
+    def getNextBeacon(self):
+        for beacon in self.beacons:
+            if beacon.isReached() == False:
+                return beacon
 
+        return None
 
+    def execute(self):
+        # Add your code here
+        self.actualBeacon=self.getNextBeacon()
