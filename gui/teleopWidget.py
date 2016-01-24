@@ -108,4 +108,3 @@ class TeleopWidget(QtGui.QWidget):
         #print "v: %f w: %f" % (v_normalized,w_normalized)
         self.winParent.setXYValues(w_normalized,v_normalized)
         painter.drawImage(self.line.x()-self.qimage.width()/2, self.line.y()-self.qimage.height()/2, self.qimage);
-

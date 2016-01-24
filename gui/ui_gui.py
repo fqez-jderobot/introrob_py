@@ -127,4 +127,3 @@ class Ui_MainWindow(object):
         self.resetButton.setText(_translate("MainWindow", "Reset", None))
 
 from resources import resources_rc
-
