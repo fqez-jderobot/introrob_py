@@ -138,4 +138,3 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.sensor.setVX(-newY)
         self.sensor.setVY(-newX)
         self.sensor.sendVelocities()
-
